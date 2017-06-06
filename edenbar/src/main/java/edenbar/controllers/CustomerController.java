@@ -16,7 +16,7 @@ import edenbar.repositories.CustomerRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/edenbar/customer")
+@RequestMapping("/ebar/customer")
 public class CustomerController {
 	
 	@Autowired

@@ -15,7 +15,7 @@ import edenbar.models.Drinks;
 import edenbar.repositories.DrinkRepository;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/edenbar/drinks")
+@RequestMapping("/ebar/drinks")
 public class DrinkController {
 	@Autowired
 	DrinkRepository dr;

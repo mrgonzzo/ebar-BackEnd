@@ -19,7 +19,7 @@ import edenbar.repositories.OrderRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/edenbar/orders")
+@RequestMapping("/ebar/orders")
 public class OrdersController {
 	@Autowired
 	OrderRepository orderRepository;
@@ -34,7 +34,19 @@ public class OrdersController {
 		}
 		return Orders;
 	}
-
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/ws/{idorder}")
+	public List<Orders> findByIdorder(@PathVariable Integer idorder) {
+		System.out.println("ws is working "+idorder);
+		List<Orders> orders = new ArrayList<>();
+		Iterable<Orders> it = orderRepository.findByIdorder(idorder);
+		Iterator<Orders> iterator = it.iterator();
+		while (iterator.hasNext()) {
+			orders.add(iterator.next());
+		}
+		System.out.println("ordersByIdcustomer"+orders);
+		return orders;
+	}
 	@RequestMapping(method = RequestMethod.GET, value = "/{idcustomer}")
 	public List<Orders> findByUser(@PathVariable Integer idcustomer) {
 		System.out.println("public List<Orders> findByUser(@PathVariable Integer idcustomer) "+idcustomer);
@@ -54,4 +66,6 @@ public class OrdersController {
 		orderRepository.save(o);
 		return o;
 	}
+	
+
 }

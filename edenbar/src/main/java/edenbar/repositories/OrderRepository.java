@@ -11,5 +11,6 @@ import edenbar.models.Orders;
 public interface OrderRepository extends CrudRepository<Orders, Integer> {
 
 	List<Orders> findByIdcustomer(@Param("idcustomer") Integer idcustomer);
+	List<Orders> findByIdorder(@Param("idorder") Integer idorder);
 
 }
