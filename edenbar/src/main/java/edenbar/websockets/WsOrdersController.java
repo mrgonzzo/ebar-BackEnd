@@ -38,8 +38,9 @@ private SimpMessagingTemplate template;*/
  *   como en un servicio web o un método de Spring MVC.*/
 @MessageMapping("/kitchen")
 @SendTo("/ordermessage/ebar")
-public List<Orders> getOrderMessage(Integer id) {
+//public List<Orders> getOrderMessage(Integer id) {
 /* Default */
+public List<Orders> getOrderMessage() {
 	System.out.println("getOrderMessage executing");
 	List<Orders> wOrder = new ArrayList<>();
 try {
@@ -48,7 +49,7 @@ try {
 Thread.sleep(1000);
  
 /* Return weather info for the given place */
-wOrder = orderRepository.findByIdorder(id);
+wOrder = orderRepository.findByIdorder(1);
  
 } catch (Exception ex) {
 ex.printStackTrace();
