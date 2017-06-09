@@ -1,22 +1,25 @@
 package edenbar.websockets;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import edenbar.models.Orders;
-import edenbar.repositories.OrderRepository;
+import edenbar.models.WsRcvOrder;
+import edenbar.models.WsSndOrder;
 @Controller
 //@EnableScheduling
 public class WsOrdersController {
 
- 
-/** The data storage. */
+	@MessageMapping("/pedir") // /hello
+    @SendTo("/ordermessage/marchando") // /topic/greetings
+    public WsSndOrder wsorder(WsRcvOrder message) throws Exception {
+		System.out.println("WsRcvOrder"+ message);
+        Thread.sleep(1000); // simulated delay
+        WsSndOrder mensaje = new WsSndOrder("kitchen,  prepare" + message + "!");
+        System.out.println("WsSndOrder"+ mensaje);
+        return mensaje;
+    }
+/** The data storage. 
 
 @Autowired
 OrderRepository orderRepository;
@@ -24,7 +27,7 @@ OrderRepository orderRepository;
 private SimpMessagingTemplate template;
 /** Web socket message template 
 @Autowired
-private SimpMessagingTemplate template;*/
+private SimpMessagingTemplate template;
  
 /**
 * Get order info for a given order id  idorder.
@@ -35,20 +38,20 @@ private SimpMessagingTemplate template;*/
 */
 /*La primera indica que la URL a la que hay que invocar para enviar el mensaje al web socket es “/kitchen”.
  *  Entonces el JSON enviado se parseará automaticamente al DTO que es el argumento del método,
- *   como en un servicio web o un método de Spring MVC.*/
+ *   como en un servicio web o un método de Spring MVC.
 @MessageMapping("/kitchen")
 @SendTo("/ordermessage/ebar")
 //public List<Orders> getOrderMessage(Integer id) {
-/* Default */
+/* Default
 public List<Orders> getOrderMessage() {
 	System.out.println("getOrderMessage executing");
 	List<Orders> wOrder = new ArrayList<>();
 try {
  
-/* Lets make a pause */
+/* Lets make a pause 
 Thread.sleep(1000);
  
-/* Return weather info for the given place */
+/* Return weather info for the given place 
 wOrder = orderRepository.findByIdorder(1);
  
 } catch (Exception ex) {
@@ -61,7 +64,7 @@ return wOrder;
 /**
 * Run weather info periodically.
 
-// @Scheduled(fixedRate = 2000)*/
+// @Scheduled(fixedRate = 2000)
 public void runWInfo(Integer id) {
 this.template.convertAndSend("/ordermessage/ebar", orderRepository.findByIdorder(id));
 }

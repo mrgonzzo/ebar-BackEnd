@@ -35,7 +35,7 @@ public class OrdersController {
 		return Orders;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/ws/{idorder}")
+	//@RequestMapping(method = RequestMethod.GET, value = "/{idorder}")
 	public List<Orders> findByIdorder(@PathVariable Integer idorder) {
 		System.out.println("ws is working "+idorder);
 		List<Orders> orders = new ArrayList<>();
