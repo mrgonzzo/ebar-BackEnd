@@ -2,21 +2,21 @@ package edenbar.models;
 
 public class WsSndOrder {
 
-	private String content;
+	private Orders content;
 
 	public WsSndOrder() {
 
 	};
 
-	public WsSndOrder(String string) {
+	public WsSndOrder(Orders content) {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getContent() {
+	public Orders getContent() {
 		return content;
 	};
 
-	public void setContent(String content) {
+	public void setContent(Orders content) {
 		this.content = content;
 	};
 

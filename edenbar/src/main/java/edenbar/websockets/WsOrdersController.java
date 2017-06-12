@@ -15,7 +15,7 @@ public class WsOrdersController {
     public WsSndOrder wsorder(WsRcvOrder message) throws Exception {
 		System.out.println("WsRcvOrder"+ message);
         Thread.sleep(1000); // simulated delay
-        WsSndOrder mensaje = new WsSndOrder("kitchen,  prepare" + message + "!");
+        WsSndOrder mensaje = new WsSndOrder(message.getOrder());
         System.out.println("WsSndOrder"+ mensaje);
         return mensaje;
     }
