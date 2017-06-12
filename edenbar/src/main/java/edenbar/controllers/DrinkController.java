@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edenbar.models.Drinks;
 import edenbar.repositories.DrinkRepository;
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/ebar/drinks")
 public class DrinkController {

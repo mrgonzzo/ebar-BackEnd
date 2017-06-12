@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edenbar.models.Customer;
 import edenbar.repositories.CustomerRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/ebar/customer")
 public class CustomerController {

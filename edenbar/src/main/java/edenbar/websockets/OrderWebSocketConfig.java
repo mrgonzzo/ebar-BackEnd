@@ -27,7 +27,7 @@ public class OrderWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
     	 
-    	registry.addEndpoint("/kitchen").setAllowedOrigins("http://localhost:3000");
+    	registry.addEndpoint("/kitchen").setAllowedOrigins("*");
        registry.addEndpoint("/kitchen").withSockJS(); // /gs-guide-websocket
     }
 }
