@@ -1,22 +1,32 @@
 package edenbar.websockets;
 
+//import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import edenbar.models.Orders;
 import edenbar.models.WsRcvOrder;
 import edenbar.models.WsSndOrder;
+//import edenbar.repositories.OrderRepository;
+import edenbar.controllers.OrdersController;
 @Controller
 //@EnableScheduling
 public class WsOrdersController {
-
+	@Autowired
+	OrdersController orderController;
 	@MessageMapping("/pedir") // /hello
     @SendTo("/ordermessage/marchando") // /topic/greetings
     public WsSndOrder wsorder(WsRcvOrder message) throws Exception {
-		System.out.println("WsRcvOrder"+ message);
-        Thread.sleep(1000); // simulated delay
-        WsSndOrder mensaje = new WsSndOrder(message.getOrder());
-        System.out.println("WsSndOrder"+ mensaje);
+		System.out.println("WsRcvOrder---> "+ message);
+        //Thread.sleep(1000); // simulated delay
+		 Orders so = orderController.findByIdorder(message.getro());
+		
+        WsSndOrder mensaje = new  WsSndOrder(so);
+        
+        System.out.println("WsSndOrder getContent "+ mensaje.getContent().getiddrink());
         return mensaje;
     }
 /** The data storage. 

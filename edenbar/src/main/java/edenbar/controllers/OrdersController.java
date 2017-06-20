@@ -36,7 +36,7 @@ public class OrdersController {
 	}
 	
 	//@RequestMapping(method = RequestMethod.GET, value = "/{idorder}")
-	public List<Orders> findByIdorder(@PathVariable Integer idorder) {
+	public Orders findByIdorder(@PathVariable Integer idorder) {
 		System.out.println("ws is working "+idorder);
 		List<Orders> orders = new ArrayList<>();
 		Iterable<Orders> it = orderRepository.findByIdorder(idorder);
@@ -44,8 +44,10 @@ public class OrdersController {
 		while (iterator.hasNext()) {
 			orders.add(iterator.next());
 		}
-		System.out.println("ordersByIdcustomer"+orders);
-		return orders;
+		System.out.println("ordersByIdcustomer "+orders);
+		Orders ord=orders.get(0);
+		System.out.println("order ByIdcustomer "+ord);
+		return ord;
 	}
 	@RequestMapping(method = RequestMethod.GET, value = "/{idcustomer}")
 	public List<Orders> findByUser(@PathVariable Integer idcustomer) {
