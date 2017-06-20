@@ -22,7 +22,13 @@ public class WsRcvOrder {
 
 package edenbar.models;
 
-public class WsRcvOrder {
+import java.io.Serializable;
+
+public class WsRcvOrder implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer ro;
 
 	public WsRcvOrder() {

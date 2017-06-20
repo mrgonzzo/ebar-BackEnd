@@ -25,23 +25,29 @@ public class WsSndOrder {
 
 package edenbar.models;
 
-public class WsSndOrder {
+import java.io.Serializable;
 
-	private Orders content;
+public class WsSndOrder implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String content;
 
 	public WsSndOrder() {
 
 	};
 
-	public WsSndOrder(Orders content) {
+	public WsSndOrder(String content) {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Orders getContent() {
+	public String getContent() {
 		return content;
 	};
 
-	public void setContent(Orders content) {
+	public void setContent(String content) {
 		this.content = content;
 	};
 

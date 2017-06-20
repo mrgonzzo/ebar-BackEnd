@@ -7,6 +7,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import com.google.gson.Gson;
+
 import edenbar.models.Orders;
 import edenbar.models.WsRcvOrder;
 import edenbar.models.WsSndOrder;
@@ -19,16 +21,23 @@ public class WsOrdersController {
 	OrdersController orderController;
 	@MessageMapping("/pedir") // /hello
     @SendTo("/ordermessage/marchando") // /topic/greetings
-    public WsSndOrder wsorder(WsRcvOrder message) throws Exception {
+    public String wsorder(WsRcvOrder message) throws Exception {
 		System.out.println("WsRcvOrder---> "+ message);
         //Thread.sleep(1000); // simulated delay
 		 Orders so = orderController.findByIdorder(message.getro());
-		
-        WsSndOrder mensaje = new  WsSndOrder(so);
-        
-        System.out.println("WsSndOrder getContent "+ mensaje.getContent().getiddrink());
-        return mensaje;
+		 
+		 System.out.println("orderController.findByIdorder(message.getro());"+message.getro());
+		 System.out.println("so:  "+so.getidorder()+" "+so.getiddrink());
+		 Gson gson = new Gson();
+		 String json = gson.toJson(so);
+		 System.out.println("json: "+ json);
+         WsSndOrder mensaje = new  WsSndOrder(json);
+         System.out.println("mensaje: "+mensaje);
+        return json;
     }
+	
+	
+	
 /** The data storage. 
 
 @Autowired
