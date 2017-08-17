@@ -19,8 +19,8 @@ public class OrderWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
 	 *  También indicamos que los mensajes de los clientes al servidor irán dirigidos a una URL que empezará por “/wsebar” */
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-    	config.enableSimpleBroker("/ordermessage"); // /topic
-        config.setApplicationDestinationPrefixes("/wsebar");// /app
+    	config.enableSimpleBroker("/ordermessage"); // /topic escribe del server al cliente
+        config.setApplicationDestinationPrefixes("/wsebar");// /app escribe del cliente al server
     }
    //se establece “/kitchen” como la URI del web socket creado 
     // y se indica que se espera SockJS para establecer la comunicación desde el cliente.

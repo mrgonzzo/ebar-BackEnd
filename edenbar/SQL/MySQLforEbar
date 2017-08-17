@@ -1,0 +1,95 @@
+DROP DATABASE IF EXISTS `NETWAITER_DB_V2`;
+create database NETWAITER_DB_V2 CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+use NETWAITER_DB_V2;
+
+drop table IF EXISTS tb_articulo,tb_cliente,tb_comanda,tb_detalle_comanda,tb_edulcorante;
+
+create table tb_articulo ( id_articulo varchar(3),
+						   clase_articulo varchar (50),
+                           subclase_articulo varchar (50),
+                           precio_articulo decimal(4,2),
+                           CONSTRAINT pk_articulo PRIMARY KEY (id_articulo, clase_articulo, subclase_articulo));
+                           
+create table tb_cliente ( id_cliente varchar(3),
+                          nombre_cliente varchar(255),
+                          credito_cliente decimal(4,2),
+						  CONSTRAINT pk_cliente PRIMARY KEY (id_cliente,nombre_cliente)); 
+
+                          
+create table tb_comanda (id_comanda varchar(3),
+						 fecha_comanda TimeStamp (6),
+						 id_cliente varchar(3),
+                         precio_comanda decimal(4,2),
+                         pagado boolean,
+                         CONSTRAINT pk_comanda PRIMARY KEY (id_comanda,id_cliente,fecha_comanda),
+                         FOREIGN KEY (id_cliente) REFERENCES tb_cliente(id_cliente)); 
+ 
+                        
+create table tb_detalle_comanda( id_detalle int,
+								 id_comanda varchar(3),
+								 id_articulo varchar(3),
+                                 cantidad_articulo int,
+                                 precio_detalle decimal(4,2), 
+                                 CONSTRAINT pk_detalle PRIMARY KEY (id_comanda,id_detalle),
+                                 FOREIGN KEY (id_comanda) REFERENCES tb_comanda(id_comanda)); 
+                                 
+create table tb_edulcorante (id_edulcorante varchar(3),
+						 nombre_edulcorante varchar (20),
+                         CONSTRAINT pk_detalle PRIMARY KEY (id_edulcorante,nombre_edulcorante));
+
+insert into tb_edulcorante values ('001','Azucar blanquilla'); 
+insert into tb_edulcorante values ('002','Azucar moreno');
+insert into tb_edulcorante values ('003','Miel');
+insert into tb_edulcorante values ('004','Estevia'); 
+insert into tb_edulcorante values ('005','Sacarina');
+INSERT INTO `tb_articulo` VALUES ('001','Café','Brasileño',2.50),('002','Café','Colombia',2.50),('003','Café','Arabiga',2.50),('004','Café','La Estrella',1.50),('005','Café','descafeinado',1.50),('006','Té','Moruno',2.00),('007','Té','Jazmín',2.00),('008','Té','Rojo',2.00),('009','Té','Negro',2.00),('010','Batido','Fresa',4.00),('011','Batido','Vainilla',4.00),('012','Batido','Chocolate',4.00);
+CREATE PROCEDURE `insertArticulo`(IN articulo varchar(3),
+								   IN clase varchar(50),
+                                   IN subclase varchar(50),
+                                   IN precio decimal (4,2))
+BEGIN
+insert into tb_articulo values (articulo,
+								clase,
+                                subclase,
+                                precio);
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deuda_cliente`(IN cliente varchar(3))
+BEGIN
+SELECT *
+FROM facturas_pendientesSP_MENU_2_subclaseartSP_MENU_2_subclaseart
+where id_cliente = cliente;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MENU_1_claseart`()
+BEGIN
+SELECT 
+      DISTINCT clase_articulo
+FROM tb_articulo;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MENU_2_subclaseart`(IN articulo varchar(50))
+BEGIN
+ SELECT subclase_articulo, precio_articulo
+ FROM tb_articulo 
+ WHERE clase_articulo = articulo;
+END
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `facturas_pendientes` AS
+    SELECT 
+        `c`.`id_cliente` AS `id_cliente`,
+        `c`.`id_comanda` AS `id_comanda`,
+        `c`.`fecha_comanda` AS `fecha_comanda`,
+        `d`.`id_detalle` AS `id_detalle`,
+        `d`.`id_articulo` AS `id_articulo`,
+        `d`.`cantidad_articulo` AS `cantidad_articulo`,
+        `d`.`precio_detalle` AS `precio_detalle`,
+        SUM(`d`.`precio_detalle`) AS `total_factura`
+    FROM
+        (`tb_detalle_comanda` `d`
+        JOIN `tb_comanda` `c` ON (((`c`.`id_comanda` = `d`.`id_comanda`)
+            AND (`c`.`pagado` = FALSE))))

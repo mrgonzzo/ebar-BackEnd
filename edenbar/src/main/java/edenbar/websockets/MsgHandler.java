@@ -24,6 +24,6 @@ public class MsgHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws Exception {
         // A message has been received
-        System.out.println("Message received: " + textMessage.getPayload());
+        System.out.println("Message received: " + textMessage);
     }
 }

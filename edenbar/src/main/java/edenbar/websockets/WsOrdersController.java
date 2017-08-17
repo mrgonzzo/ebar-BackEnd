@@ -20,7 +20,7 @@ public class WsOrdersController {
 	@Autowired
 	OrdersController orderController;
 	@MessageMapping("/pedir") // /hello
-    @SendTo("/ordermessage/marchando") // /topic/greetings
+    @SendTo("/wsebar/marchando") // /topic/greetings
     public String wsorder(WsRcvOrder message) throws Exception {
 		System.out.println("WsRcvOrder---> "+ message);
         //Thread.sleep(1000); // simulated delay
@@ -30,12 +30,27 @@ public class WsOrdersController {
 		 System.out.println("so:  "+so.getidorder()+" "+so.getiddrink());
 		 Gson gson = new Gson();
 		 String json = gson.toJson(so);
-		 System.out.println("json: "+ json);
+		 System.out.println("wsorder json: "+ json);
          WsSndOrder mensaje = new  WsSndOrder(json);
-         System.out.println("mensaje: "+mensaje);
+         System.out.println("wsorder mensaje: "+mensaje);
+        // wsofice(mensaje);
+         System.out.println("END wsorder");
         return json;
-    }
-	
+    };
+    
+	@MessageMapping("/servir") // /hello
+    @SendTo("/ordermessage/pedir") // /topic/greetings
+    public String wsofice(WsSndOrder message) throws Exception {
+		 Gson gson = new Gson();
+		 //this .toJson() is a function from com.google.code.gson
+		 String json = gson.toJson(message);
+		 System.out.println("wsofice json: "+ json);
+		 WsSndOrder mensaje = new  WsSndOrder(json);
+		 System.out.println("wsofice mensaje: "+mensaje);
+         //WsSndOrder mensaje = new  WsSndOrder(json);
+        
+        return json;
+    };
 	
 	
 /** The data storage. 
