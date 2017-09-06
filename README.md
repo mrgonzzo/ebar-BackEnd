@@ -1,4 +1,4 @@
-# ebar-BackEnd Now underconstruction becouse problems with websockets.
+# ebar-BackEnd Now underconstruction because problems with websockets.
 ## ebar BackEnd (Spring Boot, Spring Data)
 ### Purpouse:
 This is a simple web front-back aplication where a loged customer ask for a drink and the order is sended
